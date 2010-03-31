@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 $LOAD_PATH.unshift File.dirname(__FILE__) + "/../vendor/prawn/lib"
 require "prawn"
 require "prawn/measurement_extensions"
@@ -58,6 +60,23 @@ class Jambalaya < Prawn::Document
         move_down 0.1.in
       end
     end
+  end
+
+  def list(*items)
+    font("serif", :size => 9) do
+      items.each do |li|
+        float { text "•" }
+        indent(0.15.in) do
+          text li.gsub(/\s+/," "), 
+            :inline_format => true,
+            :leading       => 2
+        end
+
+        move_down 0.05.in
+      end
+    end
+
+    move_down 0.05.in
   end
 
   def code(code_text, size=7)
